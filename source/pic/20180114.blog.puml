@@ -1,0 +1,28 @@
+@startuml
+
+package https://memoryaxis.com {
+
+    package Nginx {
+        frame Server80 {
+            80 - [ReWriter]
+        }
+        frame Server443 {
+            443 - [Proxy]
+            [SSL]
+        }
+
+        [ReWriter] -> 443
+    }
+
+    package LetsEntrypt {
+        [certbot]
+    }
+    [certbot] -u-> [SSL]
+
+    package Hexo {
+        4000 - [Server]
+    }
+    [Proxy] -d-> 4000
+}
+
+@enduml
